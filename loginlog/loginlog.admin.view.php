@@ -156,6 +156,25 @@ class loginlogAdminView extends loginlog
 		// 템플릿 파일 지정
 		$this->setTemplateFile('design');
 	}
+	
+	public function dispLoginlogAdminIpSearch()
+    	{
+        	$oModel = &getModel('loginlog');
+        	$config = $oModel->getModuleConfig();
+        	if(!isset($config->ip_key)) return $this->stop("msg_invalid_request");
+        	$ip = Context::get('ipaddress');
+        	$this->setLayoutPath('./common/tpl/');
+        	$this->setLayoutFile("popup_layout");
+        	$tpl_path = sprintf('%s/%s', $this->module_path, 'tpl');
+        	$this->setTemplatePath($tpl_path);
+
+        	$file_url = sprintf('http://whois.kisa.or.kr/openapi/whois.jsp?query=%s&key=%s&answer=%s',$ip,$config->ip_key,'xml');
+        	$buff = FileHandler::getRemoteResource($file_url);
+        	$oXmlParser = new XmlParser();
+        	$content = $oXmlParser->parse($buff);
+        	Context::set('content',$content);
+        	$this->setTemplateFile('ip_search');
+    	}
 }
 
 /* End of file : loginlog.admin.view.php */
