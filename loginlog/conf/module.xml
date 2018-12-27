@@ -23,7 +23,6 @@
 		<action name="procLoginlogDeleteHistories" type="controller" />
 		
 		<action name="dispLoginlogAdminIpSearch" type="view" standalone="true" />
-        	<action name="procLoginlogIpSearch" type="controller" standalone="true"/>
 	</actions>
 	<menus>
 		<menu name="loginlog">
